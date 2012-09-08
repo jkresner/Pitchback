@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @pitch.name
+%p
+  %b Pitcher:
+  = @pitch.pitcher
+%p
+  %b Tokbox:
+  = @pitch.tokbox_id
+%p
+  %b Twilio number:
+  = @pitch.twilio_number
+
+= link_to 'Edit', edit_pitch_path(@pitch)
+\|
+= link_to 'Back', pitches_path

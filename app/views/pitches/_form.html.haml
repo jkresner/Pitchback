@@ -1,0 +1,22 @@
+= form_for @pitch do |f|
+  - if @pitch.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@pitch.errors.count, "error")} prohibited this pitch from being saved:"
+      %ul
+        - @pitch.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    = f.text_area :name
+  .field
+    = f.label :pitcher
+    = f.text_area :pitcher
+  .field
+    = f.label :tokbox_id
+    = f.text_area :tokbox_id
+  .field
+    = f.label :twilio_number
+    = f.text_area :twilio_number
+  .actions
+    = f.submit 'Save'
