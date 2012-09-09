@@ -11,10 +11,25 @@
  *= require_self
  *= require_tree .
  */
-$navbarBackground: #0073CC;
-$navbarBackgroundHighlight: #05C;
-$navbarText: #eee;
-$navbarLinkColor: #eee;
+$navbarBackground: #fff;
+$navbarBackgroundHighlight: #fff;
+$navbarText: #05C;
+$navbarLinkColor: #05C;
 @import "bootstrap";
 /* This is to account for fixed nav-bar */
-body { padding-top: 60px; }
+//body { padding-top: 60px; }
+
+.navbar-fixed-top .navbar-inner, .navbar-fixed-bottom .navbar-inner {
+  border-radius: 0 0 0 0;
+  box-shadow: 0 0 0 0;
+  -webkit-box-shadow: 0 0 0 0;
+  -moz-box-shadow: 0 0 0 0;
+}
+
+.nav-tabs, .nav-pills {
+  text-transform: uppercase;
+}
+
+.navbar .nav > li > a {
+  text-shadow: none;
+}

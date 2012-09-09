@@ -50,7 +50,7 @@ Pitchback::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-   root :to => 'pitches#index'
+   root :to => 'pitches#new'
    match 'sms' => 'feedbacks#create', :via => 'post'
    match 'feedback' => 'feedbacks#get', :via => 'get'
   # See how all your routes lay out with "rake routes"

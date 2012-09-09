@@ -1,4 +1,4 @@
-= form_for @pitch do |f|
+= form_for @pitch, :class => 'form-inline' do |f|
   - if @pitch.errors.any?
     #error_explanation
       %h2= "#{pluralize(@pitch.errors.count, "error")} prohibited this pitch from being saved:"
@@ -7,17 +7,14 @@
           %li= msg
 
   .field
-    = f.label :name
-    = f.text_field :name
+    = f.text_field :pitcher, :class =>'input-xlarge', :placeholder => 'Your Name'
   .field
-    = f.label :pitcher
-    = f.text_field :pitcher
+    = f.text_field :name, :class =>'input-xlarge', :placeholder => 'Pitch Name'
   .field
     = f.hidden_field :tokbox_id
   .field
     = f.hidden_field :twilio_number
   .actions
-    = f.submit "Submit", :class =>'btn'
-    %a{:href=>'#start', :onclick=>'javascript:startButtonClickHandler()', :class=>'btn'} Start Record
-    %a{:href=>'#stop', :onclick=>'javascript:stopButtonClickHandler()', :class=>'btn btn-warning'} Stop Record
+    = f.submit "Pitch", :class =>'btn btn-primary btn-large'
+
 

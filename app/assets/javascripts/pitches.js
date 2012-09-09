@@ -13,22 +13,40 @@ var subscribers = {};
 var VIDEO_HEIGHT = 240;
 var VIDEO_WIDTH = 320;
 
-TB.setLogLevel(TB.DEBUG);
-TB.addEventListener('exception', exceptionHandler);
 
 function initSession(sessionId) {
-    debugger;
+    TB.setLogLevel(TB.DEBUG);
+    TB.addEventListener('exception', exceptionHandler);
+
     session = TB.initSession(sessionId);
     session.addEventListener('sessionConnected', sessionConnectedHandler);
     session.addEventListener('streamCreated', streamCreatedHandler);
     token = $('input#token').val();
     session.connect(apiKey, token);
+
+}
+
+var last_feedback_created_at = null;
+
+function updateComments(){
+    var update_url = '/feedback.json';
+    if(last_feedback_created_at != null){
+        update_url = update_url + '?timestamp='+ last_feedback_created_at;
+    }
+    $.get('/feedback.json?timestamp='+last_feedback_created_at, function(){
+        for (var i=0;i<data.length;i++){
+            $('#commentul').prepend('<li><label>'+data[i].phone_number+'</label><p>'+data[i].text+'</p></li>')
+        }
+
+        last_feedback_created_at = data.length > 0 ? data[data.length-1].created_at : new Date().toISOString();;
+    });
 }
 
 function isPublisher(){
     return $('input#publisher').length > 0;
 }
 function sessionConnectedHandler(event) {
+    debugger;
     session.addEventListener('archiveCreated', archiveCreatedHandler);
     if(isPublisher()){
         // Put my webcam in a div
@@ -36,7 +54,7 @@ function sessionConnectedHandler(event) {
         publisher = TB.initPublisher(apiKey, 'videoplayer', publishProps);
         // Send my stream to the session
         session.publish(publisher);
-        session.createArchive(apiKey, 'perSession');
+        //session.createArchive(apiKey, 'perSession');
     } else {
 
     }
@@ -57,12 +75,13 @@ function subscribeToStreams(streams) {
         // Create the div to put the subscriber element in to
         var div = document.createElement('video');
         div.setAttribute('id', 'stream' + streams[i].streamId);
+        $('#videoplayer').parent().html(div);
 
-        document.body.appendChild(div);
 
         // Subscribe to the stream
         var subscribeProps = {height:240, width:320};
         session.subscribe(streams[i], div.id);
+        setInterval(updateComments, 5000);
         //only show first stream
         return;
     }

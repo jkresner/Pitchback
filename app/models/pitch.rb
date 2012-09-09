@@ -22,7 +22,7 @@ class Pitch < ActiveRecord::Base
   def token(publisher = false)
     token_params ={}
     token_params[:session_id] = self.tokbox_id
-    token_params[:role] = OpenTok::RoleConstants::PUBLISHER if publisher
+    token_params[:role] = OpenTok::RoleConstants::MODERATOR if publisher
     self.opentok_client.generateToken token_params
                                       #:session_id => self.tokbox_id#,
                                       #:role => OpenTok::RoleConstants::PUBLISHER,

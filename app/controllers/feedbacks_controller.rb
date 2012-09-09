@@ -7,7 +7,7 @@ class FeedbacksController < ApplicationController
     end
   end
   def create
-    pitch = Pitch.find_by_twilio_number params["To"]
+    pitch = Pitch.where(:twilio_number =>params["To"]).last
     if pitch
       Feedback.create! :phone_number => params["From"],
                     :text => params["Body"],
