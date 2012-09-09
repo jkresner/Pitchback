@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  text: MyText
+  score: 1
+  phone_number: MyText
+  pitch_id: 1
+  sms_id: MyString
+
+two:
+  text: MyText
+  score: 1
+  phone_number: MyText
+  pitch_id: 1
+  sms_id: MyString
