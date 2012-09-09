@@ -43,7 +43,7 @@ class PitchesController < ApplicationController
     @pitch.request_ip = request.ip
     respond_to do |format|
       if @pitch.save
-        format.html { redirect_to pitch_path @pitch, publisher: true, notice: 'Pitch was successfully created.' }
+        format.html { redirect_to pitch_path @pitch, publisher: true }
         format.json { render json: @pitch, status: :created, location: @pitch }
       else
         format.html { render action: "new" }
