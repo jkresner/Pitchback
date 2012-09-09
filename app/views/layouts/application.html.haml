@@ -1,0 +1,29 @@
+!!!
+%html
+  %head
+    %title Pitchback
+    = stylesheet_link_tag    "application", :media => "all"
+    = javascript_include_tag "application"
+    %script{:src=>"http://static.opentok.com/v0.91/js/TB.min.js"}
+    = csrf_meta_tags
+    %meta(name="viewport" content="width=device-width, initial-scale=1.0")
+  %body
+    .container
+      .navbar.navbar-fixed-top
+        .navbar-inner
+          .container
+            = link_to "Pitchback", root_path, :class =>'brand'
+            %ul{:class => 'nav pull-right'}
+              %li{:class => current_page?(root_path) ? 'active' : ''}
+                = link_to "Home", root_path
+
+              
+
+      - flash.each do |name, msg|
+        %div{:class => "alert alert-#{name == :notice ? "success" : "error"}"}
+          %a{:class => 'close', :data =>{:dismiss => 'alert'}}
+            x
+          = msg
+      .row
+        .span12
+          = yield

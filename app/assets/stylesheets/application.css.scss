@@ -11,3 +11,10 @@
  *= require_self
  *= require_tree .
  */
+$navbarBackground: #0073CC;
+$navbarBackgroundHighlight: #05C;
+$navbarText: #eee;
+$navbarLinkColor: #eee;
+@import "bootstrap";
+/* This is to account for fixed nav-bar */
+body { padding-top: 60px; }
