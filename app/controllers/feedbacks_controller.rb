@@ -12,8 +12,12 @@ class FeedbacksController < ApplicationController
 
   def get
       @timestamp = params[:timestamp]
-      @feedback = Feedback.where('created_at>?', @timestamp)
-
+      if @timestamp
+        @feedback = Feedback.where('created_at>?', @timestamp)
+      else
+        @feedback = Feedback.all
+      end
+      
       respond_to do |format|
         format.html # show.html.erb
         format.json { render json: @feedback }
