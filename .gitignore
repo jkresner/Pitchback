@@ -17,5 +17,5 @@
 # Ignore IDE files
 /.idea
 
-/.rvmrc
+.rvmrc
 .DS_Store
