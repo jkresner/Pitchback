@@ -10,8 +10,8 @@ var subscribers = {};
 //var player;
 //var recImgData;
 
-var VIDEO_HEIGHT = 240;
-var VIDEO_WIDTH = 320;
+var VIDEO_HEIGHT = 320;
+var VIDEO_WIDTH = 480;
 
 
 function initSession(sessionId) {
@@ -66,7 +66,6 @@ function streamCreatedHandler(event) {
     subscribeToStreams(event.streams);
 }
 function subscribeToStreams(streams) {
-    debugger;
     for (var i = 0; i < streams.length; i++) {
         // Make sure we don't subscribe to ourself
         if (streams[i].connection.connectionId == session.connection.connectionId) {
