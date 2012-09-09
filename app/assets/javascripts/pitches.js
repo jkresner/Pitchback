@@ -7,12 +7,6 @@ var session;
 
 var subscribers = {};
 
-//var player;
-//var recImgData;
-
-var VIDEO_HEIGHT = 320;
-var VIDEO_WIDTH = 480;
-
 
 function initSession(sessionId) {
     TB.setLogLevel(TB.DEBUG);
@@ -75,11 +69,11 @@ function subscribeToStreams(streams) {
         // Create the div to put the subscriber element in to
         var div = document.createElement('video');
         div.setAttribute('id', 'stream' + streams[i].streamId);
-        $('#videoplayer').parent().html(div);
+        $('#videoplayer').html(div);
 
 
         // Subscribe to the stream
-        var subscribeProps = {height:240, width:320};
+        var subscribeProps = {height:320, width:480};
         session.subscribe(streams[i], div.id);
         setInterval(commentUpdater, 5000);
         //only show first stream
