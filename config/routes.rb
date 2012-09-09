@@ -52,7 +52,7 @@ Pitchback::Application.routes.draw do
   # just remember to delete public/index.html.
    root :to => 'pitches#index'
    match 'sms' => 'feedbacks#create', :via => 'post'
-    match 'feedbacks' => 'feedbacks#index', :via => 'get'
+   match 'feedback' => 'feedbacks#get', :via => 'get'
   # See how all your routes lay out with "rake routes"
 
   # This is a legacy wild controller route that's not recommended for RESTful applications.

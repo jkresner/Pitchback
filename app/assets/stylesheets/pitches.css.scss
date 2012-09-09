@@ -4,7 +4,10 @@
 
 .videocol {}
 .videoplayer { border:solid 1px #d3d3d3;width:320px;height:240px;margin:0px auto 10px auto }
-.videodetails {}
-.commentscol { background:gray;}
-.commentsummary { background:darkgray;height:100px }
+.videodetails { text-align:center }
+.videodetails p { font-size:20px;color:gray;margin-top:40px }
+.commentscol {  }
+.commentsummary { height:100px;font-size:20px;padding:10px 20px 10px 20px;line-height:32px; }
+.commentsummary b { font-size:24px; }
 .commentlist {}
+.commentlist li { border-top:solid 1px #d3d3d3;padding:20px 10px 20px 10px }
