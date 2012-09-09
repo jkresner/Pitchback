@@ -8,12 +8,10 @@ class Feedback < ActiveRecord::Base
 
     if self.text && !Feedback.where(:phone_number => self.phone_number, :pitch_id => self.pitch_id ).exists?
       match = self.text.scan(SCORE_REGEX).first
-      @score = match[1..-1].to_i if match
-      if @score > 5
-	self.score = 5
-      else
-        self.score = @score
-      end 
+      self.score = match[1..-1].to_i if match
+      if self.score && self.score > 5
+	      self.score = 5
+
     end
   end
 
