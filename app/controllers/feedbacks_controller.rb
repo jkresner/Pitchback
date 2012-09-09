@@ -19,7 +19,7 @@ class FeedbacksController < ApplicationController
 
   def get
       @timestamp = params[:timestamp]
-      if @timestamp
+      if @timestamp && @timestamp!="nil"
         @feedback = Feedback.where('created_at>?', @timestamp)
       else
         @feedback = Feedback.all

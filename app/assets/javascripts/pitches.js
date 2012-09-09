@@ -28,25 +28,24 @@ function initSession(sessionId) {
 
 var last_feedback_created_at = null;
 
-function updateComments(){
+var commentUpdater = function updateComments(){
     var update_url = '/feedback.json';
     if(last_feedback_created_at != null){
         update_url = update_url + '?timestamp='+ last_feedback_created_at;
     }
-    $.get('/feedback.json?timestamp='+last_feedback_created_at, function(){
+    $.get(update_url, function(data){
         for (var i=0;i<data.length;i++){
             $('#commentul').prepend('<li><label>'+data[i].phone_number+'</label><p>'+data[i].text+'</p></li>')
         }
 
         last_feedback_created_at = data.length > 0 ? data[data.length-1].created_at : new Date().toISOString();;
     });
-}
+};
 
 function isPublisher(){
     return $('input#publisher').length > 0;
 }
 function sessionConnectedHandler(event) {
-    debugger;
     session.addEventListener('archiveCreated', archiveCreatedHandler);
     if(isPublisher()){
         // Put my webcam in a div
@@ -55,17 +54,19 @@ function sessionConnectedHandler(event) {
         // Send my stream to the session
         session.publish(publisher);
         //session.createArchive(apiKey, 'perSession');
+        setInterval(commentUpdater, 5000);
     } else {
-
+        // Subscribe to streams that were in the session when we connected
+        subscribeToStreams(event.streams);
     }
-    // Subscribe to streams that were in the session when we connected
-    subscribeToStreams(event.streams);
+
 }
 function streamCreatedHandler(event) {
     // Subscribe to any new streams that are created
     subscribeToStreams(event.streams);
 }
 function subscribeToStreams(streams) {
+    debugger;
     for (var i = 0; i < streams.length; i++) {
         // Make sure we don't subscribe to ourself
         if (streams[i].connection.connectionId == session.connection.connectionId) {
@@ -81,7 +82,7 @@ function subscribeToStreams(streams) {
         // Subscribe to the stream
         var subscribeProps = {height:240, width:320};
         session.subscribe(streams[i], div.id);
-        setInterval(updateComments, 5000);
+        setInterval(commentUpdater, 5000);
         //only show first stream
         return;
     }

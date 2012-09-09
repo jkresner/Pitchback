@@ -17,7 +17,7 @@ $navbarText: #05C;
 $navbarLinkColor: #05C;
 @import "bootstrap";
 /* This is to account for fixed nav-bar */
-//body { padding-top: 60px; }
+body { padding-top: 40px; }
 
 .navbar-fixed-top .navbar-inner, .navbar-fixed-bottom .navbar-inner {
   border-radius: 0 0 0 0;
