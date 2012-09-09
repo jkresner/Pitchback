@@ -1,17 +1,27 @@
 %p#notice= notice
 
-%p
-  %b Name:
-  = @pitch.name
-%p
-  %b Pitcher:
-  = @pitch.pitcher
-%p
-  %b Tokbox:
-  = @pitch.tokbox_id
-%p
-  %b Twilio number:
-  = @pitch.twilio_number
+.row
+  .span6.videocol
+    .row
+      .span12.videoplayer
+    .row
+      .span12.videodetails
+        %p
+          %b Name:
+          = @pitch.name
+        %p
+          %b Pitcher:
+          = @pitch.pitcher
+
+  .span6.commentscol
+    .commentsummary
+    .commentlist
+      %ul
+        %li.comment
+          %p This is the best talk ever
+        %li.comment
+          %p This is awesome
+
 
 = link_to 'Edit', edit_pitch_path(@pitch)
 \|

@@ -22,20 +22,24 @@ function init() {
     session = TB.initSession(sessionId);
     session.addEventListener('sessionConnected', sessionConnectedHandler);
     session.connect(apiKey, token);
-
-    //createRecorder();
 }
+
 
 function sessionConnectedHandler(event) {
     session.addEventListener('archiveCreated', archiveCreatedHandler);
     console.log('session connected');
 
     archive = event.archives[0];
+    //session.closeArchive(archive);
     console.log(archive, event);
-    //session.createArchive(apiKey, 'perStream');
+    if (!archive)
+    {
+       session.createArchive(apiKey, 'perSession');
+    }
 }
 
 function archiveCreatedHandler(event) {
+    console.log('archiveCreatedHandler', event);
     archive = event.archives[0];
     archiveId = archive.archiveId;
     //alert("Archive created.");
@@ -44,15 +48,37 @@ function archiveCreatedHandler(event) {
 
 function startButtonClickHandler() {
     console.log('startButtonClickHandler', archive);
-    session.addEventListener('sessionRecordingStarted', sessionRecordingStartedHandler);
-    //session.startRecording(archive);
+    var pitchdata = { pitch: { 'name': $('#pitch_name').val(), 'pitcher': $('#pitch_pitcher').val() } };
+    console.log('pitchdata', pitchdata);
+    $.post("/pitches", pitchdata, function() {
+        session.addEventListener('sessionRecordingStarted', sessionRecordingStartedHandler);
+        session.startRecording(archive);
+        alert('pitch created');
+    });
+
 }
 
 var publisher;
 
 function sessionRecordingStartedHandler(event) {
-    // Publish my webcam stream and put it in a div
+    console.log('sessionRecordingStartedHandler', event);
     publisher = session.publish('myPublisherDiv');
+}
+
+function stopButtonClickHandler() {
+    console.log('stopButtonClickHandler', archive);
+    session.addEventListener('sessionRecordingStopped', sessionRecordingStoppedHandler);
+    session.stopRecording(archive);
+}
+
+function sessionRecordingStoppedHandler(event) {
+    session.addEventListener("archiveClosed", archiveClosedHandler);
+    session.closeArchive(archive);
+    session.unpublish(publisher);
+}
+
+function archiveClosedHandler(event) {
+    alert("Recording stopped.");
 }
 
 /*function createRecorder() {
