@@ -7,6 +7,7 @@ gem 'rails', '3.2.8'
 
 gem 'mysql2'
 gem 'twilio-ruby'
+gem 'opentok'
 
 gem 'haml'
 gem 'haml-rails'

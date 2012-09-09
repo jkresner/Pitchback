@@ -41,7 +41,7 @@ class PitchesController < ApplicationController
   # POST /pitches.json
   def create
     @pitch = Pitch.new(params[:pitch])
-
+    @pitch.request_ip = request.ip
     respond_to do |format|
       if @pitch.save
         format.html { redirect_to @pitch, notice: 'Pitch was successfully created.' }

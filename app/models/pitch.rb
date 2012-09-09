@@ -1,8 +1,9 @@
 class Pitch < ActiveRecord::Base
   attr_accessible :name, :pitcher, :tokbox_id, :twilio_number
-  attr_accessor :twilio_client
+  attr_accessor :twilio_client, :opentok_client, :request_ip
 
   before_create :request_twilio_number
+  before_create :fetch_tokbox_id
 
   #protected
   def twilio_client
@@ -16,6 +17,12 @@ class Pitch < ActiveRecord::Base
 		end
 		@twilio_client
   end
+  def opentok_client
+    if @opentok_client.nil?
+      @opentok_client = OpenTok::OpenTokSDK.new "20198111", "961f6beb6e088eeb4bf18df3b9311ebb96fe9877"
+    end
+    @opentok_client
+  end
 
   def request_twilio_number
   	# get some available numbers
@@ -27,5 +34,8 @@ class Pitch < ActiveRecord::Base
 		# buy the first one
 		#@number = @numbers[0].phone_number
 		#self.twilio_client.account.incoming_phone_numbers.create(:phone_number => @number)
+  end
+  def fetch_tokbox_id
+    self.tokbox_id = self.opentok_client.createSession( self.request_ip )
   end
 end
