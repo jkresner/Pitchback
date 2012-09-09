@@ -22,10 +22,14 @@
       %h2
         = @pitch.pitcher
 
+    .actiondetails
+      =link_to "Get twitter Pitchback", "https://twitter.com/intent/tweet?text=I%27m%20getting%20feedback%20with%20%23Pitchback%20at%20http://disrupt.greenantlabs.com#{pitch_path(@pitch)} - let me know how I'm doing", :target => '_blank', :class=> 'btn btn-warning', :style=>'margin:10px auto;width:160px'
+
+
   .span6.commentscol
     .commentsummary.alert.alert-info
-      Send a text to
-      %b #{Pitchback::Application.config.default_number}
+      Text
+      %b 415 390 5615
       like "This is awesome +4" to leave a comment & give a 4/5 score.
     .commentlist
       %ul#commentul.nav.nav-list

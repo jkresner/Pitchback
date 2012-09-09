@@ -17,7 +17,6 @@ function initSession(sessionId) {
     session.addEventListener('streamCreated', streamCreatedHandler);
     token = $('input#token').val();
     session.connect(apiKey, token);
-
 }
 
 var last_feedback_created_at = null;
