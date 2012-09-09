@@ -17,10 +17,15 @@
       %b #{Pitchback::Application.config.default_number}
       like "This is awesome +4" to leave a comment & give a 4/5 score.
     .commentlist
-      %ul.nav.nav-list
-        %li.comment
-          %label 646 464 2323
-          %p This is the best talk ever
-        %li.comment
-          %label 646 464 1111
-          %p This is awesome
+      %ul#commentul.nav.nav-list
+//        %li.comment
+//          %label 646 464 2323
+//          .rating{:value=>5}
+//          %p This is the best talk ever
+//        %li.comment
+//          %label 646 464 1111
+//          .rating{:value=>4}
+//          %p This is awesome
+
+
+%script{:type=>"text/javascript"}
