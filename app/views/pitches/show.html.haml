@@ -1,8 +1,16 @@
 %p#notice= notice
 
+= hidden_field_tag :token,  @pitch.token
+- if @publisher
+  = hidden_field_tag :token,  @pitch.token(true)
+  = hidden_field_tag :publisher, 'true'
+- else
+  = hidden_field_tag :token,  @pitch.token
+
 .row
   .span6.videocol
-    .videoplayer
+
+    .videoplayer#videoplayer
     .videodetails
       %p Pitch name
       %h1
@@ -18,14 +26,10 @@
       like "This is awesome +4" to leave a comment & give a 4/5 score.
     .commentlist
       %ul#commentul.nav.nav-list
-//        %li.comment
-//          %label 646 464 2323
-//          .rating{:value=>5}
-//          %p This is the best talk ever
-//        %li.comment
-//          %label 646 464 1111
-//          .rating{:value=>4}
-//          %p This is awesome
 
+:javascript
+    $(document).ready(function(){
+    //Initialize
 
-%script{:type=>"text/javascript"}
+      initSession('#{@pitch.tokbox_id}');
+  });

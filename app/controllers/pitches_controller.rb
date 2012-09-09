@@ -3,7 +3,6 @@ class PitchesController < ApplicationController
   # GET /pitches.json
   def index
     @pitches = Pitch.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @pitches }
@@ -14,7 +13,7 @@ class PitchesController < ApplicationController
   # GET /pitches/1.json
   def show
     @pitch = Pitch.find(params[:id])
-
+    @publisher = params[:publisher]
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @pitch }
@@ -44,7 +43,7 @@ class PitchesController < ApplicationController
     @pitch.request_ip = request.ip
     respond_to do |format|
       if @pitch.save
-        format.html { redirect_to @pitch, notice: 'Pitch was successfully created.' }
+        format.html { redirect_to pitch_path @pitch, publisher: true, notice: 'Pitch was successfully created.' }
         format.json { render json: @pitch, status: :created, location: @pitch }
       else
         format.html { render action: "new" }

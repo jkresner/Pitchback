@@ -17,6 +17,7 @@
   .field
     = f.hidden_field :twilio_number
   .actions
+    = f.submit "Submit", :class =>'btn'
     %a{:href=>'#start', :onclick=>'javascript:startButtonClickHandler()', :class=>'btn'} Start Record
     %a{:href=>'#stop', :onclick=>'javascript:stopButtonClickHandler()', :class=>'btn btn-warning'} Stop Record
 
