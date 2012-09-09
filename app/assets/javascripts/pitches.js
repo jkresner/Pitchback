@@ -42,7 +42,7 @@ function sessionConnectedHandler(event) {
     session.addEventListener('archiveCreated', archiveCreatedHandler);
     if(isPublisher()){
         // Put my webcam in a div
-        var publishProps = {height:240, width:320};
+        var publishProps = {height:320, width:480};
         publisher = TB.initPublisher(apiKey, 'videoplayer', publishProps);
         // Send my stream to the session
         session.publish(publisher);
