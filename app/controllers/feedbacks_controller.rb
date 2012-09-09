@@ -1,4 +1,11 @@
 class FeedbacksController < ApplicationController
+  def index
+    @feedbacks = Feedback.all
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @feedbacks }
+    end
+  end
   def create
     pitch = Pitch.find_by_twilio_number params["To"]
     if pitch

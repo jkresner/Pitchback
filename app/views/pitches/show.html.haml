@@ -1,9 +1,16 @@
 %p#notice= notice
 
+= hidden_field_tag :token,  @pitch.token
+- if @publisher
+  = hidden_field_tag :token,  @pitch.token(true)
+  = hidden_field_tag :publisher, 'true'
+- else
+  = hidden_field_tag :token,  @pitch.token
+
 .row
   .span6.videocol
     .row
-      .span12.videoplayer
+      .span12.videoplayer#videoplayer
     .row
       .span12.videodetails
         %p
@@ -26,3 +33,9 @@
 = link_to 'Edit', edit_pitch_path(@pitch)
 \|
 = link_to 'Back', pitches_path
+:javascript
+  $(document).ready(function(){
+  //Initialize
+
+    initSession('#{@pitch.tokbox_id}');
+  });

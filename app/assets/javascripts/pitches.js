@@ -1,12 +1,10 @@
-var sessionId = '2_MX4yMDE5ODExMX5-U2F0IFNlcCAwOCAxNzo0NTo1OSBQRFQgMjAxMn4wLjUwOTk2OTk1fg';
 var apiKey = '20198111';
-var token = 'T1==cGFydG5lcl9pZD0yMDE5ODExMSZzaWc9MTQ5MDYwOTJhYjQxMzM0ZDRjMTU1MTI3ZTBiYzRkNjMzMjY3YjA4NTpzZXNzaW9uX2lkPTJfTVg0eU1ERTVPREV4TVg1LVUyRjBJRk5sY0NBd09DQXhOem8wTlRvMU9TQlFSRlFnTWpBeE1uNHdMalV3T1RrMk9UazFmZyZjcmVhdGVfdGltZT0xMzQ3MTUxNTY1JmV4cGlyZV90aW1lPTEzNDk3NDM1NjUmcm9sZT1tb2RlcmF0b3ImY29ubmVjdGlvbl9kYXRhPSZub25jZT00NjcwMw==';
 var archive;
 var archiveId;
-
-
-var session;
+var token;
 var publisher;
+var session;
+
 var subscribers = {};
 
 //var player;
@@ -18,47 +16,65 @@ var VIDEO_WIDTH = 320;
 TB.setLogLevel(TB.DEBUG);
 TB.addEventListener('exception', exceptionHandler);
 
-function init() {
+function initSession(sessionId) {
+    debugger;
     session = TB.initSession(sessionId);
     session.addEventListener('sessionConnected', sessionConnectedHandler);
+    session.addEventListener('streamCreated', streamCreatedHandler);
+    token = $('input#token').val();
     session.connect(apiKey, token);
 }
 
-
+function isPublisher(){
+    return $('input#publisher').length > 0;
+}
 function sessionConnectedHandler(event) {
     session.addEventListener('archiveCreated', archiveCreatedHandler);
-    console.log('session connected');
+    if(isPublisher()){
+        // Put my webcam in a div
+        var publishProps = {height:240, width:320};
+        publisher = TB.initPublisher(apiKey, 'videoplayer', publishProps);
+        // Send my stream to the session
+        session.publish(publisher);
+        session.createArchive(apiKey, 'perSession');
+    } else {
 
-    archive = event.archives[0];
-    //session.closeArchive(archive);
-    console.log(archive, event);
-    if (!archive)
-    {
-       session.createArchive(apiKey, 'perSession');
+    }
+    // Subscribe to streams that were in the session when we connected
+    subscribeToStreams(event.streams);
+}
+function streamCreatedHandler(event) {
+    // Subscribe to any new streams that are created
+    subscribeToStreams(event.streams);
+}
+function subscribeToStreams(streams) {
+    for (var i = 0; i < streams.length; i++) {
+        // Make sure we don't subscribe to ourself
+        if (streams[i].connection.connectionId == session.connection.connectionId) {
+            return;
+        }
+
+        // Create the div to put the subscriber element in to
+        var div = document.createElement('video');
+        div.setAttribute('id', 'stream' + streams[i].streamId);
+
+        document.body.appendChild(div);
+
+        // Subscribe to the stream
+        var subscribeProps = {height:240, width:320};
+        session.subscribe(streams[i], div.id);
+        //only show first stream
+        return;
     }
 }
-
 function archiveCreatedHandler(event) {
     console.log('archiveCreatedHandler', event);
     archive = event.archives[0];
     archiveId = archive.archiveId;
-    //alert("Archive created.");
+    session.addEventListener('sessionRecordingStarted', sessionRecordingStartedHandler);
+    session.startRecording(archive);
 }
 
-
-function startButtonClickHandler() {
-    console.log('startButtonClickHandler', archive);
-    var pitchdata = { pitch: { 'name': $('#pitch_name').val(), 'pitcher': $('#pitch_pitcher').val() } };
-    console.log('pitchdata', pitchdata);
-    $.post("/pitches", pitchdata, function() {
-        session.addEventListener('sessionRecordingStarted', sessionRecordingStartedHandler);
-        session.startRecording(archive);
-        alert('pitch created');
-    });
-
-}
-
-var publisher;
 
 function sessionRecordingStartedHandler(event) {
     console.log('sessionRecordingStartedHandler', event);
@@ -110,6 +126,3 @@ function exceptionHandler(event) {
     alert('Exception: ' + event.code + '::' + event.message);
 }
 
-$(function() {
-    init();
-});
