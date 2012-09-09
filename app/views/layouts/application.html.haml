@@ -3,9 +3,9 @@
   %head
     %title Pitchback
     = stylesheet_link_tag    "application", :media => "all"
-    = javascript_include_tag "application"
     %script{:src=>"http://static.opentok.com/v0.91/js/TB.min.js"}
     %script{:src=>"https://raw.github.com/pubnub/pubnub-api/master/javascript-modern/pubnub-3.1.min.js"}
+    = javascript_include_tag "application"
     = csrf_meta_tags
     %meta(name="viewport" content="width=device-width, initial-scale=1.0")
   %body

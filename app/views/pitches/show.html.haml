@@ -1,18 +1,23 @@
 %p#notice= notice
 
-%p
-  %b Name:
-  = @pitch.name
-%p
-  %b Pitcher:
-  = @pitch.pitcher
-%p
-  %b Tokbox:
-  = @pitch.tokbox_id
-%p
-  %b Twilio number:
-  = @pitch.twilio_number
+.row
+  .span6.videocol
+    .videoplayer
+    .videodetails
+      %p Pitch name
+      %h1
+        = @pitch.name
+      %p Pitcher
+      %h2
+        = @pitch.pitcher
 
-= link_to 'Edit', edit_pitch_path(@pitch)
-\|
-= link_to 'Back', pitches_path
+  .span6.commentscol
+    .commentsummary
+    .commentlist
+      %ul.nav.nav-list
+        %li.comment
+          %label 646 464 2323
+          %p This is the best talk ever
+        %li.comment
+          %label 646 464 1111
+          %p This is awesome
