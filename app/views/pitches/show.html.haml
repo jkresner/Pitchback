@@ -12,7 +12,10 @@
         = @pitch.pitcher
 
   .span6.commentscol
-    .commentsummary
+    .commentsummary.alert.alert-info
+      Send a text to
+      %b #{Pitchback::Application.config.default_number}
+      like "This is awesome +4" to leave a comment & give a 4/5 score.
     .commentlist
       %ul.nav.nav-list
         %li.comment
