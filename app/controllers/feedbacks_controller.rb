@@ -7,5 +7,6 @@ class FeedbacksController < ApplicationController
                     :sms_id => params["SmsSid"],
                     :pitch => pitch
     end
+    head :ok
   end
 end
