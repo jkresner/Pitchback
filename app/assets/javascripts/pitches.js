@@ -113,3 +113,24 @@ function exceptionHandler(event) {
 $(function() {
     init();
 });
+
+(function(){
+var pubnub = PUBNUB({
+    publish_key   : 'pub-a7d5b0a7-f46d-44c5-9d19-37469552064d',
+    subscribe_key : 'sub-0ce8b14a-fa3b-11e1-9fab-7907aaed5aa2',
+    ssl           : false,
+    origin        : 'pubsub.pubnub.com'
+});
+
+pubnub.subscribe({
+        restore  : true,
+        connect  : send_hello,
+        channel  : sessionId,
+        callback : function(message) {
+            console.log(JSON.stringify(message));
+        },
+        disconnect : function() {
+            console.log("Connection Lost");
+        }
+    });
+})();
